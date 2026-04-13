@@ -1,0 +1,27 @@
+using UnityEngine;
+
+public class collectable : MonoBehaviour
+{
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    void OerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Player"))
+        {
+            platformercontrol p = col.GetComponent<platformercontrol>();
+            p.coinsCollected++;
+            Debug.Log(p.coinsCollected);
+            Destroy(this.gameObject);
+        }
+    }
+}
