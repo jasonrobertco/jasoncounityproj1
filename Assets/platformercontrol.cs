@@ -14,17 +14,22 @@ public class platformercontrol : MonoBehaviour
 
     public int coinsCollected = 0;
     bool isGrounded = false;
-
+    bool isFacingRight = true;
+    private Animator playerAnim;
+    private SpriteRenderer playerSpriteRenderer;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+        playerAnim = GetComponent<Animator>();
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        playerAnim.SetBool("isRunning", rb.linearVelocity.x != 0);
+        playerAnim.SetBool("isGrounded", isGrounded);
+        //playerAnim.SetBool("JumpTrigger", ;
     }
     void OnMove(InputValue value)
     {
@@ -34,7 +39,20 @@ public class platformercontrol : MonoBehaviour
         //changing velocity to want
 
         rb.linearVelocity = new Vector2(v.x * speed, rb.linearVelocity.y);
+        playerAnim.SetBool("isRunning", rb.linearVelocity.x != 0);
+        if((v.x < 0) && isFacingRight)
+        {
+            playerSpriteRenderer.flipX = true;
+            isFacingRight = false;
+        }
+        if((v.x > 0) && !isFacingRight)
+        {
+            playerSpriteRenderer.flipX = false;
+            isFacingRight = true;
+        }
+        //playerSpriteRenderer.flipX = ;
     }
+
 
     void OnJump()
     {
